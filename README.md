@@ -17,3 +17,10 @@ addresses these issues I have encountered. The target audience for the app will 
 be most useful for people who are forgetful with dates and/or people who care about giving well-thought-out
 gifts that other will actually like.
 
+## User Stories
+- As a user, I want to be able to create a new birthday and add it to my calendar
+- As a user, I want to be able to view a list of all the birthdays in my calendar
+- As a user, I want to be able to select a birthday and view information about the person
+whose birthday it is, such as their age and some gift ideas for them
+- As a user, I want to be able to delete a birthday
+
