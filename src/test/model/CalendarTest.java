@@ -35,6 +35,11 @@ public class CalendarTest {
         calendarTest.addBirthday(snoopy);
         assertEquals(1, calendarTest.getBirthdays().size());
         assertEquals(snoopy.getName(), calendarTest.getBirthdays().get(0).getName());
+    }
+
+    @Test
+    public void testAddMultipleBirthdays() {
+        calendarTest.addBirthday(snoopy);
 
         calendarTest.addBirthday(birthday2);
         assertEquals(2, calendarTest.getBirthdays().size());
@@ -66,21 +71,23 @@ public class CalendarTest {
 
     @Test
     public void testBirthdaysToString(){
-        String expectedString = "No birthdays added yet.\n";
-        assertEquals(expectedString, calendarTest.birthdaysToString());
-
         calendarTest.addBirthday(snoopy);
         calendarTest.addBirthday(birthday2);
         calendarTest.addBirthday(birthday3);
         calendarTest.addBirthday(birthday4);
 
-        expectedString = "01/10 - Snoopy\n08/25 - Julian\n02/22 - Jane\n02/03 - Filler Person\n";
+        String expectedString = "01/10 - Snoopy\n08/25 - Julian\n02/22 - Jane\n02/03 - Filler Person\n";
 
         assertEquals(expectedString, calendarTest.birthdaysToString());
     }
 
     @Test
-    public void testRetrieveBirthday(){
+    public void testBirthdaysToStringNoBirthdaysAdded() {
+        assertEquals("No birthdays added yet.\n", calendarTest.birthdaysToString());
+    }
+
+    @Test
+    public void testRetrieveBirthday() {
         calendarTest.addBirthday(snoopy);
         calendarTest.addBirthday(birthday2);
         calendarTest.addBirthday(birthday3);
@@ -88,9 +95,15 @@ public class CalendarTest {
         Birthday snoopyRetrieved = calendarTest.retrieveBirthday(snoopy.getName());
         assertEquals(snoopy.getName(), snoopyRetrieved.getName());
         assertEquals(snoopy.getMonth(), snoopyRetrieved.getMonth());
+    }
+
+    @Test
+    public void testRetrieveBirthdayNoBirthdayWithThatName() {
+        calendarTest.addBirthday(snoopy);
+        calendarTest.addBirthday(birthday2);
+        calendarTest.addBirthday(birthday3);
 
         Birthday nullRetrieved = calendarTest.retrieveBirthday(birthday4.getName());
         assertEquals(null, nullRetrieved);
     }
-
 }

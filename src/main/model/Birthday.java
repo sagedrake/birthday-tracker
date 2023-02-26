@@ -119,17 +119,6 @@ public class Birthday {
         }
 
         LocalDate today = LocalDate.now();
-        int currentYear = today.getYear();
-
-        // date of the person's birthdate in the current year
-        LocalDate birthdayThisYear = LocalDate.of(currentYear, birthdate.getMonthValue(), birthdate.getDayOfMonth());
-
-        boolean bdayHasNotPassed = today.isBefore(birthdayThisYear);
-
-        // if their birthday is today, or their birthday has passed this year
-        if (!bdayHasNotPassed) {
-            return Integer.toString(currentYear - birthYear);
-        }
-        return Integer.toString(currentYear - birthYear - 1);
+        return Long.toString(ChronoUnit.YEARS.between(birthdate, today));
     }
 }

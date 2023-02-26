@@ -47,16 +47,14 @@ class BirthdayTest {
         assertEquals("08/10", testBirthday.dateToString());
     }
 
-    @Test
-    public void testInterestsToString() {
-        assertEquals("Reading, Dancing, Sleeping", testBirthday.interestsToString());
-        testBirthday = new Birthday("Name", 1, 1, 1, emptyList, emptyList);
-        assertEquals("None", testBirthday.interestsToString());
-    }
 
     @Test
     public void testYearToString() {
         assertEquals("1950", testBirthday.yearToString());
+    }
+
+    @Test
+    public void testYearToStringUnknownYear() {
         ArrayList<String> emptyList = new ArrayList<>();
         testBirthday = new Birthday("Name", 1, 1, 0, emptyList, emptyList);
         assertEquals("Unknown", testBirthday.yearToString());
@@ -65,9 +63,23 @@ class BirthdayTest {
     @Test
     public void testGiftIdeasToString() {
         assertEquals("War and Peace, Root beer", testBirthday.giftIdeasToString());
-        ArrayList<String> emptyList = new ArrayList<>();
+    }
+
+    @Test
+    public void testGiftIdeasToStringNoGiftIdeas() {
         testBirthday = new Birthday("Name", 1, 1, 0, emptyList, emptyList);
         assertEquals("None", testBirthday.giftIdeasToString());
+    }
+
+    @Test
+    public void testInterestsToString() {
+        assertEquals("Reading, Dancing, Sleeping", testBirthday.interestsToString());
+    }
+
+    @Test
+    public void testInterestsToStringNoInterests() {
+        testBirthday = new Birthday("Name", 1, 1, 1, emptyList, emptyList);
+        assertEquals("None", testBirthday.interestsToString());
     }
 
     @Test
@@ -77,30 +89,47 @@ class BirthdayTest {
     }
 
     @Test
-    public void testDaysUntil() {
+    public void testDaysUntilTypicalBirthday() {
         LocalDate today = LocalDate.now();
-        LocalDate tomorrow = today.plusDays(1);
-        LocalDate yesterday = today.minusDays(1);
         LocalDate typicalDate = today.plusDays(75);
 
-        Birthday bdayTomorrow = new Birthday("name1", tomorrow.getMonthValue(), tomorrow.getDayOfMonth(), 2020,
-                emptyList, emptyList);
-        Birthday bdayYesterday = new Birthday("name2", yesterday.getMonthValue(), yesterday.getDayOfMonth(),
-                yesterday.getYear(), emptyList, emptyList);
-        Birthday bdayToday = new Birthday("name3", today.getMonthValue(), today.getDayOfMonth(), 1999,
-                emptyList, emptyList);
-        Birthday bdayTypical = new Birthday("name4", typicalDate.getMonthValue(), typicalDate.getDayOfMonth(),
+        Birthday bdayTypical = new Birthday("name", typicalDate.getMonthValue(), typicalDate.getDayOfMonth(),
                 1840, emptyList, emptyList);
 
+        assertEquals(75, bdayTypical.daysUntil());
+    }
 
-        assertEquals(1, bdayTomorrow.daysUntil());
-        assertEquals(0, bdayToday.daysUntil());
+    @Test
+    public void testDaysUntilBirthdayWasYesterday() {
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+
+        Birthday bdayYesterday = new Birthday("name", yesterday.getMonthValue(), yesterday.getDayOfMonth(),
+                yesterday.getYear(), emptyList, emptyList);
+
         if (Year.now().isLeap()) {
             assertEquals(365, bdayYesterday.daysUntil());
         } else {
             assertEquals(364, bdayYesterday.daysUntil());
         }
-        assertEquals(75, bdayTypical.daysUntil());
+    }
+
+    @Test
+    public void testDaysUntilBirthdayIsToday() {
+        LocalDate today = LocalDate.now();
+        Birthday bdayToday = new Birthday("name", today.getMonthValue(), today.getDayOfMonth(), 1999,
+                emptyList, emptyList);
+        assertEquals(0, bdayToday.daysUntil());
+    }
+
+    @Test
+    public void testDaysUntilBirthdayIsTomorrow() {
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
+
+        Birthday bdayTomorrow = new Birthday("name", tomorrow.getMonthValue(), tomorrow.getDayOfMonth(), 2020,
+                emptyList, emptyList);
+        assertEquals(1, bdayTomorrow.daysUntil());
     }
 
     @Test
@@ -110,21 +139,40 @@ class BirthdayTest {
     }
 
     @Test
-    public void testAgeAsString() {
+    public void testAgeAsStringBirthdayIsToday() {
         LocalDate today = LocalDate.now();
-        LocalDate tomorrow = today.plusDays(1);
-        LocalDate yesterday = today.minusDays(1);
 
-        Birthday bdayTomorrow = new Birthday("name1", tomorrow.getMonthValue(), tomorrow.getDayOfMonth(), 2020,
-                emptyList, emptyList);
-        Birthday bdayYesterday = new Birthday("name2", yesterday.getMonthValue(), yesterday.getDayOfMonth(),
-                yesterday.getYear(), emptyList, emptyList);
-        Birthday bdayToday = new Birthday("name3", today.getMonthValue(), today.getDayOfMonth(), 1999,
+        Birthday bdayToday = new Birthday("name", today.getMonthValue(), today.getDayOfMonth(), 1999,
                 emptyList, emptyList);
 
-        assertEquals(Integer.toString(today.getYear() - bdayTomorrow.getYear() - 1), bdayTomorrow.ageAsString());
         assertEquals(Integer.toString(today.getYear() - bdayToday.getYear()), bdayToday.ageAsString());
-        assertEquals(Integer.toString(today.getYear() - bdayYesterday.getYear()), bdayYesterday.ageAsString());
     }
 
+    @Test
+    public void testAgeAsStringBirthdayWasYesterday() {
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+
+        Birthday bdayYesterday = new Birthday("name", yesterday.getMonthValue(), yesterday.getDayOfMonth(),
+                yesterday.getYear(), emptyList, emptyList);
+
+        // if today is not Jan 1st
+        if (!(today.getMonthValue()==1 && today.getDayOfMonth()==1)) {
+            assertEquals(Integer.toString(today.getYear() - bdayYesterday.getYear()), bdayYesterday.ageAsString());
+        }
+    }
+
+    @Test
+    public void testAgeAsStringBirthdayIsTomorrow() {
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
+
+        Birthday bdayTomorrow = new Birthday("name", tomorrow.getMonthValue(), tomorrow.getDayOfMonth(), 2020,
+                emptyList, emptyList);
+
+        // if today is not Dec 31st
+        if (!(today.getMonthValue()==12 && today.getDayOfMonth()==31)) {
+            assertEquals(Integer.toString(today.getYear() - bdayTomorrow.getYear() - 1), bdayTomorrow.ageAsString());
+        }
+    }
 }
