@@ -1,14 +1,15 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
+// represents a person's birthday with their name and birthdate
+// optionally includes their birth year, and their interests and gift ideas to help with choosing birthday gifts
 public class Birthday {
-    private int month;
-
-    private int dayNum;
+    private LocalDate birthdate; // birthdate with year 0 represents the year being unknown
     private String name;
-
-    private int year;
 
     private ArrayList<String> interests;
     private ArrayList<String> giftIdeas;
@@ -18,48 +19,17 @@ public class Birthday {
     public Birthday(String name, int month, int dayNum, int year, ArrayList<String> interests,
                     ArrayList<String> giftIdeas) {
         this.name = name;
-        this.month = month;
-        this.dayNum = dayNum;
-        this.year = year;
+        this.birthdate = LocalDate.of(year, month, dayNum);
         this.interests = interests;
         this.giftIdeas = giftIdeas;
     }
 
-    // EFFECTS: return String representation of birthdate
-    public String dateToString() {
-        String birthdayString = "";
-
-        if (month < 10) {
-            birthdayString += "0" + month;
-        } else {
-            birthdayString += Integer.toString(month);
-        }
-
-        birthdayString += "/";
-
-        if (dayNum < 10) {
-            birthdayString += "0" + dayNum;
-        } else {
-            birthdayString += Integer.toString(dayNum);
-        }
-
-        return birthdayString;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
     public int getMonth() {
-        return month;
+        return birthdate.getMonthValue();
     }
 
     public int getDayNum() {
-        return dayNum;
-    }
-
-    public void setDayNum(int dayNum) {
-        this.dayNum = dayNum;
+        return birthdate.getDayOfMonth();
     }
 
     public String getName() {
@@ -71,7 +41,7 @@ public class Birthday {
     }
 
     public int getYear() {
-        return year;
+        return birthdate.getYear();
     }
 
     public ArrayList<String> getInterests() {
@@ -80,6 +50,20 @@ public class Birthday {
 
     public ArrayList<String> getGiftIdeas() {
         return giftIdeas;
+    }
+
+    // EFFECTS: return String representation of birthdate
+    public String dateToString() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd");
+        return birthdate.format(dateTimeFormatter);
+    }
+
+    // EFFECTS: Return string representation of year, or "Unknown" is year is -1
+    public String yearToString() {
+        if (birthdate.getYear() == 0) {
+            return "Unknown";
+        }
+        return Integer.toString(birthdate.getYear());
     }
 
     // EFFECTS: Return string representation of interests
@@ -94,14 +78,6 @@ public class Birthday {
         return result;
     }
 
-    // EFFECTS: Return string representation of year, or "Unknown" is year is -1
-    public String yearToString() {
-        if (year == -1) {
-            return "Unknown";
-        }
-        return Integer.toString(year);
-    }
-
     // Effects: Return string representation of gift ideas
     public String giftIdeasToString() {
         if (giftIdeas.isEmpty()) {
@@ -112,5 +88,47 @@ public class Birthday {
             result += ", " + giftIdeas.get(i);
         }
         return result;
+    }
+
+    // EFFECTS: calculate number of days until the next occurrence of the birthday
+    public int daysUntil() {
+        LocalDate today = LocalDate.now();
+
+        // date of birthday with this year's year
+        LocalDate birthdateCurrentYear = LocalDate.of(today.getYear(), getMonth(), getDayNum());
+
+        int currentYearDaysUntil = (int)ChronoUnit.DAYS.between(LocalDate.now(), birthdateCurrentYear);
+        // if birthday has not already passed this year (days between will be negative if it has already passed)
+        if (currentYearDaysUntil >= 0) {
+            return currentYearDaysUntil;
+        }
+        // date of birthday with next year's year
+        LocalDate birthdateNextYear = LocalDate.of(today.getYear() + 1, getMonth(), getDayNum());
+        int nextYearDaysUntil = (int)ChronoUnit.DAYS.between(LocalDate.now(), birthdateNextYear);
+
+        return nextYearDaysUntil;
+    }
+
+    // EFFECTS: calculate and return person's age as a String, or "Unknown" if the person's birth year is unknown
+    public String ageAsString() {
+        int bdayDay = birthdate.getDayOfMonth();
+        int bdayMonth = birthdate.getMonthValue();
+        int bdayYear = birthdate.getYear();
+
+        // year 0000 represents unknown year
+        if (bdayYear == 0) {
+            return "Unknown";
+        }
+
+        LocalDate today = LocalDate.now();
+        int todayDay = today.getDayOfMonth();
+        int todayMonth = today.getMonthValue();
+        int todayYear = today.getYear();
+
+        boolean bdayHasPassed = (todayMonth > bdayMonth) || ((todayMonth == bdayMonth) && (todayDay >= bdayDay));
+        if (bdayHasPassed) {
+            return Integer.toString(todayYear - bdayYear);
+        }
+        return Integer.toString(todayYear - bdayYear - 1);
     }
 }

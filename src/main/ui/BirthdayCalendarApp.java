@@ -7,18 +7,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+// Birthday calendar application
+// roughly based on the TellerApp class in the Teller App program
 public class BirthdayCalendarApp {
     private Scanner input;
     private Calendar calendar;
+
+    public BirthdayCalendarApp() {
+        runBirthdayCalendarApp();
+    }
 
     // MODIFIES: this
     // EFFECTS: processes whether app should keep running or quit
     public void runBirthdayCalendarApp() {
         String choice;
-        Boolean exitApp = false;
+        boolean exitApp = false;
 
         setUp();
-        input.nextLine(); // scan over leftover \n
+        welcomeMessage();
 
         while (!exitApp) {
             displayMainMenu();
@@ -74,12 +80,14 @@ public class BirthdayCalendarApp {
         input.nextLine(); // clear leftover \n
 
         int year = inputBirthYear();
+
         System.out.print("\tTheir interests separated by commas, or enter s to skip this step:");
         ArrayList<String> interests = inputListOfString();
+
         System.out.print("\tGift ideas for their birthday separated by commas, or enter s to skip this step:");
         ArrayList<String> giftIdeas = inputListOfString();
 
-        calendar.addBirthday(name, month, dayNum, year, interests, giftIdeas);
+        calendar.addBirthday(new Birthday(name, month, dayNum, year, interests, giftIdeas));
         System.out.print("\nThe birthday was successfully added! Press Enter to return to main menu.");
         input.nextLine(); // wait for user to press enter
     }
@@ -87,16 +95,22 @@ public class BirthdayCalendarApp {
     // EFFECTS: takes input of comma separated strings and processes them into a list of strings
     private ArrayList<String> inputListOfString() {
         String nextLine = input.nextLine();
+
+        // input of "s" means the user wants to skip inputting this information, so return an empty list
+        if (nextLine.equals("s")) {
+            return new ArrayList<>();
+        }
+
         ArrayList<String> strings = new ArrayList<>(Arrays.asList(nextLine.split("\"\\\\s*,\\\\s*\"")));
         return strings;
     }
 
-    // EFFECTS: collects person's birth year from user and returns it, or returns -1 if user chooses to skip
+    // EFFECTS: collects person's birth year from user and returns it, or returns 0 if user chooses to skip
     private int inputBirthYear() {
         System.out.print("\tTheir birth-year in the format yyyy, or enter s to skip this step:");
         String year = input.nextLine();
         if (year.equals("s")) {
-            return -1;
+            return 0;
         }
         return Integer.parseInt(year);
     }
@@ -151,21 +165,49 @@ public class BirthdayCalendarApp {
     public void displayBirthday(Birthday b) {
         System.out.println("Name: " + b.getName());
         System.out.println("Birthday: " + b.dateToString());
-        System.out.println("Birth Year: " + b.yearToString());
-        System.out.println("Interests: " + b.interestsToString());
+        System.out.println("Birth year: " + b.yearToString());
+        System.out.println("Days until birthday: " + b.daysUntil());
+        System.out.println("Age: " + b.ageAsString());
+        System.out.println("\nInterests: " + b.interestsToString());
         System.out.println("Gift Ideas: " + b.giftIdeasToString());
     }
 
     // MODIFIES: this
-    // EFFECTS: sets up scanner and user's birthday
+    // EFFECTS: sets up scanner and creates calendar
     public void setUp() {
         input = new Scanner(System.in);
-        System.out.println("Welcome to your birthday calendar :)\n\n");
-        System.out.print("\nPlease enter your birthday in the format mm/dd:");
         input.useDelimiter("/|\\n");
-        int month = input.nextInt();
-        int dayNum = input.nextInt();
-        calendar = new Calendar(new Birthday("You", month, dayNum, -1,
-                new ArrayList<>(), new ArrayList<>()));
+
+        calendar = new Calendar();
+    }
+
+    // EFFECTS: prints welcome message to the screen
+    public void welcomeMessage() {
+        System.out.println("Welcome to ... ");
+
+        // cake based on art from https://asciiart.website/index.php?art=events/birthday
+        // "bdayz" text was generated using https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+        System.out.println("                     (        (");
+        System.out.println("                    ( )      ( )          (");
+        System.out.println("             (       Y        Y          ( )");
+        System.out.println("            ( )     |\"|      |\"|          Y");
+        System.out.println("             Y      | |.-----| |---.___  |\"|");
+        System.out.println("            |\"|  .--| |,~~~~~| |~~~,,,,'-| |");
+        System.out.println("            | |-,,~~'-'      '-'       ~~| |._");
+        System.out.println("           .| |~ _        _              '-',,'.");
+        System.out.println("          /,'-' | |__  __| |__ _ _  _ ___    ~,\\ ");
+        System.out.println("         / ;    | '_ \\/ _` / _` | || /_  /   _; )");
+        System.out.println("         | ;    |_.__/\\__,_\\__,_|\\_, /_”_/    ; |");
+        System.out.println("         |\\ ~,,,                |__/      ,‘“‘  |");
+        System.out.println("         | '-._  ~~ ,,,            ,,,~~ `  _.-'|");
+        System.out.println("         |     '-.__   ~~~~~~~~~~~   __.- '`    |");
+        System.out.println("         |\\         ` '----------' `           _|");
+        System.out.println("           '-._                           __.-'");
+        System.out.println("               '-.__ _____________ __.-'");
+
+        System.out.println("\nthe birthday calendar app.");
+
+        System.out.print("\nPress enter to continue.");
+        input.nextLine();
     }
 }

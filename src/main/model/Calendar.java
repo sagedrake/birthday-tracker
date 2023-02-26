@@ -1,17 +1,19 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+// represents a person's calendar with a list of birthdays of people they know
 public class Calendar {
     private List<Birthday> birthdays;
-    private Birthday userBirthday;
 
-    // EFFECTS: create a new calendar with the user's birthday and an empty birthday list
-    public Calendar(Birthday userBirthday) {
+    // EFFECTS: create a new calendar with an empty birthday list
+    public Calendar() {
         birthdays = new ArrayList<>();
-        this.userBirthday = userBirthday;
+    }
+
+    public List<Birthday> getBirthdays() {
+        return birthdays;
     }
 
     // REQUIRES: name is the name of a person whose birthday is in the calendar
@@ -26,21 +28,24 @@ public class Calendar {
         }
     }
 
-    // REQUIRES: there is no birthday with that name already in the calendar
-    //           month, day is a valid date in a calendar year
+    // REQUIRES: there is no birthday with the same name already in the calendar
     // MODIFIES: this
-    // EFFECTS: add birthday with this name and date to the calendar
-    public void addBirthday(String name, int month, int day, int year,
-                            ArrayList<String> interests, ArrayList<String> giftIdeas) {
-        birthdays.add(new Birthday(name, month, day, year, interests, giftIdeas));
+    // EFFECTS: add this birthday to the calendar
+    public void addBirthday(Birthday b) {
+        birthdays.add(b);
     }
 
     // EFFECTS: produce String which is a list of all the birthdays in the calendar
     //          each person's name and the date of the birthday are displayed
-    //          birthdays are not listed in the order they are stored
+    //          birthdays are listed in the order they were added
     public String birthdaysToString() {
+
+        if (birthdays.isEmpty()) {
+            return "No birthdays added yet.\n";
+        }
+
         String result = "";
-        result += userBirthday.dateToString() + " - " + userBirthday.getName() + "\n";
+
         for (Birthday b: birthdays) {
             result += b.dateToString() + " - " + b.getName() + "\n";
         }
@@ -56,17 +61,5 @@ public class Calendar {
             }
         }
         return null;
-    }
-
-    public Birthday getUserBirthday() {
-        return userBirthday;
-    }
-
-    public void setUserBirthday(Birthday userBirthday) {
-        this.userBirthday = userBirthday;
-    }
-
-    public List<Birthday> getBirthdays() {
-        return birthdays;
     }
 }

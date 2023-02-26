@@ -10,93 +10,87 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CalendarTest {
     private Calendar calendarTest;
     private ArrayList<String> emptyList;
+    private Birthday snoopy;
+    private Birthday birthday2;
+    private Birthday birthday3;
+    private Birthday birthday4;
 
     @BeforeEach
     public void runBefore() {
-        Birthday userBirthday = new Birthday("Sage", 11, 26, 2003, emptyList, emptyList);
-        calendarTest = new Calendar(userBirthday);
+        calendarTest = new Calendar();
         emptyList = new ArrayList<>();
-
+        snoopy = new Birthday("Snoopy", 1, 10, 1950, emptyList, emptyList);
+        birthday2 = new Birthday("Julian", 8, 25, 2007, emptyList, emptyList);
+        birthday3 = new Birthday("Jane", 2, 22, 1966, emptyList, emptyList);
+        birthday4 = new Birthday("Filler Person", 2, 3, 3333, emptyList, emptyList);
     }
 
     @Test
     public void testConstructor() {
-        Birthday userBirthdayTest = calendarTest.getUserBirthday();
-        assertEquals("Sage", userBirthdayTest.getName());
-        assertEquals(11, userBirthdayTest.getMonth());
-        assertEquals(26, userBirthdayTest.getDayNum());
-
         assertEquals(0, calendarTest.getBirthdays().size());
     }
 
     @Test
     public void testAddBirthday() {
-        calendarTest.addBirthday("Snoopy", 1, 10, 1950, emptyList, emptyList);
+        calendarTest.addBirthday(snoopy);
         assertEquals(1, calendarTest.getBirthdays().size());
-        assertEquals("Snoopy", calendarTest.getBirthdays().get(0).getName());
+        assertEquals(snoopy.getName(), calendarTest.getBirthdays().get(0).getName());
 
-        calendarTest.addBirthday("Julian", 8, 25, 2007, emptyList, emptyList);
+        calendarTest.addBirthday(birthday2);
         assertEquals(2, calendarTest.getBirthdays().size());
-        assertEquals(8, calendarTest.getBirthdays().get(1).getMonth());
+        assertEquals(birthday2.getMonth(), calendarTest.getBirthdays().get(1).getMonth());
 
-        calendarTest.addBirthday("Jane", 2, 22, 1966, emptyList, emptyList);
+        calendarTest.addBirthday(birthday3);
         assertEquals(3, calendarTest.getBirthdays().size());
-        assertEquals(22, calendarTest.getBirthdays().get(2).getDayNum());
+        assertEquals(birthday3.getDayNum(), calendarTest.getBirthdays().get(2).getDayNum());
     }
 
     @Test
     public void deleteBirthday(){
-        calendarTest.addBirthday("Snoopy", 1, 10, 1950, emptyList, emptyList);
-        calendarTest.addBirthday("Julian", 8, 25, 2007, emptyList, emptyList);
-        calendarTest.addBirthday("Jane", 2, 22, 1966, emptyList, emptyList);
+        calendarTest.addBirthday(snoopy);
+        calendarTest.addBirthday(birthday2);
+        calendarTest.addBirthday(birthday3);
         assertEquals(3, calendarTest.getBirthdays().size());
 
-        calendarTest.deleteBirthday("Snoopy");
+        calendarTest.deleteBirthday(snoopy.getName());
         assertEquals(2, calendarTest.getBirthdays().size());
-        assertEquals("Jane", calendarTest.getBirthdays().get(1).getName());
+        assertEquals(birthday3.getName(), calendarTest.getBirthdays().get(1).getName());
 
-        calendarTest.deleteBirthday("Jane");
+        calendarTest.deleteBirthday(birthday3.getName());
         assertEquals(1, calendarTest.getBirthdays().size());
-        assertEquals("Julian", calendarTest.getBirthdays().get(0).getName());
+        assertEquals(birthday2.getName(), calendarTest.getBirthdays().get(0).getName());
 
-        calendarTest.deleteBirthday("Julian");
+        calendarTest.deleteBirthday(birthday2.getName());
         assertEquals(0, calendarTest.getBirthdays().size());
     }
 
     @Test
     public void testBirthdaysToString(){
-        calendarTest.addBirthday("Snoopy", 1, 10, 1950, emptyList, emptyList);
-        calendarTest.addBirthday("Julian", 8, 25, 2007, emptyList, emptyList);
-        calendarTest.addBirthday("Jane", 2, 22, 1966, emptyList, emptyList);
-        calendarTest.addBirthday("Filler Person", 2, 3, 3333, emptyList, emptyList);
+        String expectedString = "No birthdays added yet.\n";
+        assertEquals(expectedString, calendarTest.birthdaysToString());
 
-        String expectedString = "01/10 - Snoopy\n08/25 - Julian\n02/22 - Jane\n02/03 - Filler Person\n";
+        calendarTest.addBirthday(snoopy);
+        calendarTest.addBirthday(birthday2);
+        calendarTest.addBirthday(birthday3);
+        calendarTest.addBirthday(birthday4);
+
+        expectedString = "01/10 - Snoopy\n08/25 - Julian\n02/22 - Jane\n02/03 - Filler Person\n";
 
         assertEquals(expectedString, calendarTest.birthdaysToString());
     }
 
     @Test
     public void testRetrieveBirthday(){
-        calendarTest.addBirthday("Snoopy", 1, 10, 1950, emptyList, emptyList);
-        calendarTest.addBirthday("Julian", 8, 25, 2007, emptyList, emptyList);
-        calendarTest.addBirthday("Filler Person", 2, 3, 3333, emptyList, emptyList);
+        calendarTest.addBirthday(snoopy);
+        calendarTest.addBirthday(birthday2);
+        calendarTest.addBirthday(birthday3);
 
-        Birthday snoopyRetrieved = calendarTest.retrieveBirthday("Snoopy");
-        assertEquals("Snoopy", snoopyRetrieved.getName());
-        assertEquals(1, snoopyRetrieved.getMonth());
+        Birthday snoopyRetrieved = calendarTest.retrieveBirthday(snoopy.getName());
+        assertEquals(snoopy.getName(), snoopyRetrieved.getName());
+        assertEquals(snoopy.getMonth(), snoopyRetrieved.getMonth());
 
-        Birthday fillerRetrieved = calendarTest.retrieveBirthday("Filler Person");
-        assertEquals("Filler Person", fillerRetrieved.getName());
-        assertEquals(3, fillerRetrieved.getDayNum());
+        Birthday nullRetrieved = calendarTest.retrieveBirthday(birthday4.getName());
+        assertEquals(null, nullRetrieved);
     }
 
-    @Test
-    public void testSetUserBirthday(){
-        calendarTest.setUserBirthday(new Birthday("user", 12, 23, 1467, emptyList, emptyList));
-
-        Birthday userBirthdayTest = calendarTest.getUserBirthday();
-        assertEquals("user", userBirthdayTest.getName());
-        assertEquals(12, userBirthdayTest.getMonth());
-        assertEquals(23, userBirthdayTest.getDayNum());
-    }
 }
