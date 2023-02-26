@@ -111,24 +111,25 @@ public class Birthday {
 
     // EFFECTS: calculate and return person's age as a String, or "Unknown" if the person's birth year is unknown
     public String ageAsString() {
-        int bdayDay = birthdate.getDayOfMonth();
-        int bdayMonth = birthdate.getMonthValue();
-        int bdayYear = birthdate.getYear();
+        int birthYear = birthdate.getYear();
 
         // year 0000 represents unknown year
-        if (bdayYear == 0) {
+        if (birthYear == 0) {
             return "Unknown";
         }
 
         LocalDate today = LocalDate.now();
-        int todayDay = today.getDayOfMonth();
-        int todayMonth = today.getMonthValue();
-        int todayYear = today.getYear();
+        int currentYear = today.getYear();
 
-        boolean bdayHasPassed = (todayMonth > bdayMonth) || ((todayMonth == bdayMonth) && (todayDay >= bdayDay));
-        if (bdayHasPassed) {
-            return Integer.toString(todayYear - bdayYear);
+        // date of the person's birthdate in the current year
+        LocalDate birthdayThisYear = LocalDate.of(currentYear, birthdate.getMonthValue(), birthdate.getDayOfMonth());
+
+        boolean bdayHasNotPassed = today.isBefore(birthdayThisYear);
+
+        // if their birthday is today, or their birthday has passed this year
+        if (!bdayHasNotPassed) {
+            return Integer.toString(currentYear - birthYear);
         }
-        return Integer.toString(todayYear - bdayYear - 1);
+        return Integer.toString(currentYear - birthYear - 1);
     }
 }

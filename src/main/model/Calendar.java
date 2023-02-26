@@ -20,11 +20,14 @@ public class Calendar {
     // MODIFIES: this
     // EFFECTS: deletes the birthday of the person with that name from the calendar
     public void deleteBirthday(String name) {
-        for (Birthday b: birthdays) {
-            if (b.getName().equals(name)) {
-                birthdays.remove(b);
-                break;
+        boolean removed = false;
+        int i = 0;
+
+        while (!removed) {
+            if (birthdays.get(i).getName().equals(name)) {
+                removed = birthdays.remove(birthdays.get(i));
             }
+            i++;
         }
     }
 

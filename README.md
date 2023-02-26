@@ -20,7 +20,7 @@ gifts that other will actually like.
 ## User Stories
 - As a user, I want to be able to create a new birthday and add it to my calendar
 - As a user, I want to be able to view a list of all the birthdays in my calendar
-- As a user, I want to be able to select a birthday and view information about the person
+- As a user, I want to be able to search for a birthday and view information about the person
 whose birthday it is, such as their age and some gift ideas for them
 - As a user, I want to be able to delete a birthday
 
