@@ -24,3 +24,8 @@ gifts that other will actually like.
 whose birthday it is, such as their age and some gift ideas for them
 - As a user, I want to be able to delete a birthday
 
+Phase 2 additions:
+- As a user, when I select 'x' to exit the application, I want to be provided with the option to save any changes to 
+my calendar
+- As a user, I want to be provided with the option to load my calendar from file when I open the application
+
