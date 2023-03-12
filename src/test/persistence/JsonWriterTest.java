@@ -12,6 +12,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// Heavily based on JsonWriterTest class from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonWriterTest {
     private JsonWriter writer;
     private JsonReader reader;

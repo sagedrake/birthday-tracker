@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -178,5 +180,20 @@ class BirthdayTest {
         if (!(today.getMonthValue()==12 && today.getDayOfMonth()==31)) {
             assertEquals(Integer.toString(today.getYear() - bdayTomorrow.getYear() - 1), bdayTomorrow.ageAsString());
         }
+    }
+
+    @Test
+    public void testToJson() {
+        JSONObject jsonObject = testBirthday.toJson();
+        assertEquals("Snoopy", jsonObject.getString("name"));
+        assertEquals(8, jsonObject.getInt("month"));
+        assertEquals(10, jsonObject.getInt("day"));
+        assertEquals(1950, jsonObject.getInt("year"));
+        JSONArray interests = jsonObject.getJSONArray("interests");
+        assertEquals(3, interests.length());
+        assertEquals("Reading", interests.get(0).toString());
+        JSONArray giftIdeas = jsonObject.getJSONArray("gift ideas");
+        assertEquals(2, giftIdeas.length());
+        assertEquals("War and Peace", giftIdeas.get(0).toString());
     }
 }

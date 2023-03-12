@@ -61,7 +61,7 @@ public class Birthday implements Writeable {
         return birthdate.format(dateTimeFormatter);
     }
 
-    // EFFECTS: Return string representation of year, or "Unknown" is year is -1
+    // EFFECTS: Return string representation of year, or "Unknown" is year is 0
     public String yearToString() {
         if (birthdate.getYear() == 0) {
             return "Unknown";
@@ -125,6 +125,7 @@ public class Birthday implements Writeable {
         return Long.toString(ChronoUnit.YEARS.between(birthdate, today));
     }
 
+    // EFFECTS: Returns a JSONObject that represents this birthday
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

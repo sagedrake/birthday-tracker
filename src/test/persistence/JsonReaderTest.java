@@ -9,6 +9,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// Heavily based on JsonReaderTest class from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonReaderTest {
     JsonReader reader;
     Calendar c;

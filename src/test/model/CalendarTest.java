@@ -1,11 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class CalendarTest {
     private Calendar calendarTest;
@@ -104,6 +107,17 @@ public class CalendarTest {
         calendarTest.addBirthday(birthday3);
 
         Birthday nullRetrieved = calendarTest.retrieveBirthday(birthday4.getName());
-        assertEquals(null, nullRetrieved);
+        assertNull(nullRetrieved);
+    }
+
+    @Test
+    public void testToJson() {
+        calendarTest.addBirthday(snoopy);
+        calendarTest.addBirthday(birthday2);
+        calendarTest.addBirthday(birthday3);
+        JSONObject jsonObject = calendarTest.toJson();
+        JSONArray birthdays = jsonObject.getJSONArray("birthdays");
+        assertEquals(3, birthdays.length());
+        assertEquals(snoopy.toJson().toString(), birthdays.get(0).toString());
     }
 }

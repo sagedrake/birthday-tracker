@@ -70,6 +70,7 @@ public class Calendar implements Writeable {
         return null;
     }
 
+    // EFFECTS: Returns JSONObject that represents this calendar
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -77,6 +78,7 @@ public class Calendar implements Writeable {
         return json;
     }
 
+    // Returns a JSONArray containing a JSONObject for each birthday in this calendar
     private JSONArray birthdaysToJson() {
         JSONArray jsonArray = new JSONArray();
 

@@ -2,8 +2,8 @@
     "birthdays": [
         {
             "name": "Snoopy",
-            "day": 1,
-            "month": 10,
+            "day": 10,
+            "month": 1,
             "year": 1950,
             "interests": ["Reading", "Dancing", "Sleeping"],
             "gift ideas": ["War and Peace", "Root beer"]

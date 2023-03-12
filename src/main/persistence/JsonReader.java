@@ -59,7 +59,7 @@ public class JsonReader {
     }
 
     // MODIFIES: c
-    // EFFECTS: parses birthday from JSON object and adds it to the calendar
+    // EFFECTS: parses a birthday from JSON object and adds it to the calendar
     private void addBirthday(Calendar c, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         int day = jsonObject.getInt("day");
@@ -78,7 +78,7 @@ public class JsonReader {
             giftIdeas.add(json.toString());
         }
 
-        Birthday birthday = new Birthday(name, day, month, year, interests, giftIdeas);
+        Birthday birthday = new Birthday(name, month, day, year, interests, giftIdeas);
         c.addBirthday(birthday);
     }
 }

@@ -2,16 +2,22 @@ package ui;
 
 import model.Birthday;
 import model.Calendar;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 // Birthday calendar application
-// roughly based on the TellerApp class in the Teller App program
+// roughly based on the TellerApp class from https://github.students.cs.ubc.ca/CPSC210/TellerApp
 public class BirthdayCalendarApp {
     private Scanner input;
     private Calendar calendar;
+    private static final String SOURCE_FILE_NAME = "./data/calendar.json";
+    private boolean unsavedChanges; // keeps track of whether user has unsaved changes
 
     public BirthdayCalendarApp() {
         runBirthdayCalendarApp();
@@ -25,12 +31,14 @@ public class BirthdayCalendarApp {
 
         setUp();
         welcomeMessage();
+        initializeCalendar();
 
         while (!exitApp) {
             displayMainMenu();
             choice = input.nextLine();
 
             if (choice.equals("x")) {
+                saveUnsavedChanges();
                 exitApp = true;
             } else {
                 processMenuChoice(choice);
@@ -38,18 +46,58 @@ public class BirthdayCalendarApp {
         }
     }
 
+    // EFFECTS: if user has unsaved changes, and they choose to save them, write calendar to file
+    private void saveUnsavedChanges() {
+        if (unsavedChanges) {
+            System.out.print("You have unsaved changes. Do you want to save them to file before exiting?");
+            System.out.print(" Enter (y/n): ");
+
+            if (input.nextLine().equals("y")) {
+                saveCalendar();
+            } else {
+                System.out.println("Your changes have not been saved.");
+            }
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: processes user choice from main menu
     private void processMenuChoice(String choice) {
-        if (choice.equals("v")) {
-            viewAllBirthdays();
-        } else if (choice.equals("a")) {
-            addBirthday();
-        } else if (choice.equals("s")) {
-            searchBirthdays();
-        } else {
-            System.out.println("Your input is invalid.");
+        switch (choice) {
+            case "v":
+                viewAllBirthdays();
+                break;
+            case "a":
+                addBirthday();
+                break;
+            case "l":
+                searchBirthdays();
+                break;
+            case "s":
+                saveCalendar();
+                break;
+            default:
+                System.out.println("Your input is invalid.");
+                break;
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Saves calendar to source file
+    private void saveCalendar() {
+        System.out.println("\n\n\n------------ Save ------------\n");
+        JsonWriter writer = new JsonWriter(SOURCE_FILE_NAME);
+        try {
+            writer.open();
+            writer.write(calendar);
+            writer.close();
+            unsavedChanges = false;
+            System.out.print("Your changes have been saved to " + SOURCE_FILE_NAME);
+        } catch (IOException e) {
+            System.out.print("Calendar could not be saved to " + SOURCE_FILE_NAME);
+        }
+        System.out.print(". Press enter to continue.");
+        input.nextLine();
     }
 
     // MODIFIES: this
@@ -88,6 +136,7 @@ public class BirthdayCalendarApp {
         ArrayList<String> giftIdeas = inputListOfString();
 
         calendar.addBirthday(new Birthday(name, month, dayNum, year, interests, giftIdeas));
+        unsavedChanges = true;
         System.out.print("\nThe birthday was successfully added! Press Enter to return to main menu.");
         input.nextLine(); // wait for user to press enter
     }
@@ -129,7 +178,8 @@ public class BirthdayCalendarApp {
         System.out.println("Please choose one of the options:");
         System.out.println("\t v -> view all birthdays");
         System.out.println("\t a -> add a birthday");
-        System.out.println("\t s -> search for a birthday");
+        System.out.println("\t l -> look up a birthday by name");
+        System.out.println("\t s -> save calendar to file");
         System.out.println("\t x -> exit app");
         System.out.print("\nEnter your choice here:");
     }
@@ -155,6 +205,8 @@ public class BirthdayCalendarApp {
             calendar.deleteBirthday(b.getName());
             System.out.print("This birthday has been deleted. Press enter to return to main menu.");
             input.nextLine();
+
+            unsavedChanges = true;
         } else {
             System.out.print("This birthday will not be deleted. Press enter to return to main menu.");
             input.nextLine();
@@ -173,12 +225,37 @@ public class BirthdayCalendarApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: sets up scanner and creates calendar
+    // EFFECTS: initializes scanner and sets unsavedChanges to false
     public void setUp() {
         input = new Scanner(System.in);
         input.useDelimiter("/|\\n");
 
-        calendar = new Calendar();
+        unsavedChanges = false;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads calendar from source file or creates new blank calendar, depending on user input
+    public void initializeCalendar() {
+        System.out.println("\n\n\n--------- Setup ---------");
+        System.out.print("Would you like to read your calendar from file? Enter y/n: ");
+
+        if (input.nextLine().equals("y")) {
+            JsonReader reader = new JsonReader(SOURCE_FILE_NAME);
+            try {
+                calendar = reader.read();
+                System.out.print("\nYour calendar has been loaded from " + SOURCE_FILE_NAME + ".");
+                System.out.print(" Press enter to continue to main menu.");
+            } catch (IOException e) {
+                System.out.print("Your calendar could not be loaded from " + SOURCE_FILE_NAME);
+                System.out.print(" Press enter to continue to main menu.");
+                calendar = new Calendar();
+            }
+
+        } else {
+            System.out.print("\nYour calendar will not be loaded from file. Press enter to continue to main menu.");
+            calendar = new Calendar();
+        }
+        input.nextLine();
     }
 
     // EFFECTS: prints welcome message to the screen
