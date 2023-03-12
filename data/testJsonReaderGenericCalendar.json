@@ -1,0 +1,20 @@
+{
+    "birthdays": [
+        {
+            "name": "Snoopy",
+            "day": 1,
+            "month": 10,
+            "year": 1950,
+            "interests": ["Reading", "Dancing", "Sleeping"],
+            "gift ideas": ["War and Peace", "Root beer"]
+        },
+        {
+            "name": "Generic Person",
+            "day": 5,
+            "month": 5,
+            "year": 0,
+            "interests": [],
+            "gift ideas": []
+        }
+    ]
+}

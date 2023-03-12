@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writeable;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -7,7 +10,7 @@ import java.util.ArrayList;
 
 // represents a person's birthday with their name and birthdate
 // optionally includes their birth year, and their interests and gift ideas to help with choosing birthday gifts
-public class Birthday {
+public class Birthday implements Writeable {
     private LocalDate birthdate; // birthdate with year 0 represents the year being unknown
     private String name;
 
@@ -120,5 +123,17 @@ public class Birthday {
 
         LocalDate today = LocalDate.now();
         return Long.toString(ChronoUnit.YEARS.between(birthdate, today));
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("day", getDayNum());
+        json.put("month", getMonth());
+        json.put("year", getYear());
+        json.put("interests", interests);
+        json.put("gift ideas", giftIdeas);
+        return json;
     }
 }

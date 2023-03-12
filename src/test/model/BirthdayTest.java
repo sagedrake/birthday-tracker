@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
 import java.util.ArrayList;
 
@@ -107,7 +108,10 @@ class BirthdayTest {
         Birthday bdayYesterday = new Birthday("name", yesterday.getMonthValue(), yesterday.getDayOfMonth(),
                 yesterday.getYear(), emptyList, emptyList);
 
-        if (Year.now().isLeap()) {
+        if (Year.now().isLeap() && today.getMonthValue() <= 2) { // if it is jan or feb of a leap year
+            assertEquals(365, bdayYesterday.daysUntil());
+        } else if (Year.isLeap(today.getYear() + 1)
+                && today.getMonthValue() > 2) { // if it is past feb and next year is a leap year
             assertEquals(365, bdayYesterday.daysUntil());
         } else {
             assertEquals(364, bdayYesterday.daysUntil());

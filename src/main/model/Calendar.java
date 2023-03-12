@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writeable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // represents a person's calendar with a list of birthdays of people they know
-public class Calendar {
+public class Calendar implements Writeable {
     private List<Birthday> birthdays;
 
     // EFFECTS: create a new calendar with an empty birthday list
@@ -64,5 +68,22 @@ public class Calendar {
             }
         }
         return null;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("birthdays", birthdaysToJson());
+        return json;
+    }
+
+    private JSONArray birthdaysToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Birthday b : birthdays) {
+            jsonArray.put(b.toJson());
+        }
+
+        return jsonArray;
     }
 }
