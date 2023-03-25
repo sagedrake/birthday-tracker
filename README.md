@@ -32,3 +32,11 @@ Phase 2 additions:
 ## Sources:
 - https://github.students.cs.ubc.ca/CPSC210/TellerApp
 - https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+For learning GUIs:
+- https://www.youtube.com/watch?v=5o3fMLPY7qY
+- https://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html
+- https://www.youtube.com/watch?v=iE8tZ0hn2Ws
+- https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
+- https://www.youtube.com/watch?v=OI-TFbHQhtA
+- https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html#overview

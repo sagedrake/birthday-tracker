@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Objects;
 
 // represents a person's birthday with their name and birthdate
 // optionally includes their birth year, and their interests and gift ideas to help with choosing birthday gifts
@@ -136,5 +137,10 @@ public class Birthday implements Writeable {
         json.put("interests", interests);
         json.put("gift ideas", giftIdeas);
         return json;
+    }
+
+    @Override
+    public String toString() {
+        return dateToString() + " - " + name;
     }
 }
