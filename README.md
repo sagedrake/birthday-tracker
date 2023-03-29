@@ -32,6 +32,8 @@ Phase 2 additions:
 ## Sources:
 - https://github.students.cs.ubc.ca/CPSC210/TellerApp
 - https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+- Cake icon: https://brandeps.com/icon/C/Cake-01
+- Cat image: https://pin.it/7Coc7Lf
 
 For learning GUIs:
 - https://www.youtube.com/watch?v=5o3fMLPY7qY

@@ -1,8 +1,20 @@
-{"birthdays": [{
-    "month": 11,
-    "year": 2003,
-    "gift ideas": [""],
-    "name": "Sage",
-    "interests": [""],
-    "day": 26
-}]}
+{
+  "birthdays": [
+    {
+      "name": "Snoopy",
+      "day": 10,
+      "month": 1,
+      "year": 1950,
+      "interests": ["Reading", "Dancing", "Sleeping"],
+      "gift ideas": ["War and Peace", "Root beer"]
+    },
+    {
+      "name": "Sage",
+      "day": 26,
+      "month": 11,
+      "year": 2003,
+      "interests": [],
+      "gift ideas": []
+    }
+  ]
+}

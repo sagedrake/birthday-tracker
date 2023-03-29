@@ -5,7 +5,6 @@ import model.Calendar;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,13 +12,13 @@ import java.util.Scanner;
 
 // Birthday calendar application
 // roughly based on the TellerApp class from https://github.students.cs.ubc.ca/CPSC210/TellerApp
-public class BirthdayCalendarApp {
+public class BirthdayCalendarConsoleApp {
     private Scanner input;
     private Calendar calendar;
     private static final String SOURCE_FILE_NAME = "./data/calendar.json";
     private boolean unsavedChanges; // keeps track of whether user has unsaved changes
 
-    public BirthdayCalendarApp() {
+    public BirthdayCalendarConsoleApp() {
         runBirthdayCalendarApp();
     }
 

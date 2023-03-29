@@ -10,6 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+// represents a window that displays detailed information about one particular birthday
 public class DisplayBirthdayWindow implements ActionListener {
     Birthday birthday;
     private JFrame frame;
@@ -18,6 +19,7 @@ public class DisplayBirthdayWindow implements ActionListener {
     private JButton deleteButton;
     private JButton mainMenuButton;
 
+    // EFFECTS: create new window to display information about the given birthday
     public DisplayBirthdayWindow(Birthday birthday) {
         this.birthday = birthday;
 
@@ -28,13 +30,24 @@ public class DisplayBirthdayWindow implements ActionListener {
         frame.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up the frame for the window, including its size and location on screen
     private void setUpFrame() {
         frame = new JFrame();
         frame.setTitle("View Birthday");
         frame.setSize(ViewCalendarWindow.WINDOW_WIDTH, ViewCalendarWindow.WINDOW_HEIGHT);
         frame.setLocationRelativeTo(null); // center the window on screen
 
+        ImageIcon cakeImage = new ImageIcon("./data/cakeIcon.png");
+        frame.setIconImage(cakeImage.getImage());
+
         frame.addWindowListener(new WindowAdapter() {
+
+            // MODIFIES: this, ViewCalendarWindow
+            // EFFECTS: When user presses the red X to close the window, display message to ask if they want to save
+            //              their calendar.
+            //          If they choose Yes, save calendar to file and exit program
+            //          If they choose No, just exit the program (don't save)
             @Override
             public void windowClosing(WindowEvent we) {
                 int result = JOptionPane.showConfirmDialog(frame,
@@ -50,16 +63,22 @@ public class DisplayBirthdayWindow implements ActionListener {
         });
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and adds "Delete" and "Main Menu" buttons to the window
     private void setUpButtons() {
         deleteButton = new JButton("Delete");
         deleteButton.addActionListener(this);
         frame.add(deleteButton, BorderLayout.SOUTH);
 
-        mainMenuButton = new JButton("Main Menu");
+        // Source: screenshot of the Google Chrome back button
+        ImageIcon backIcon = new ImageIcon("./data/backIcon.png");
+        mainMenuButton = new JButton(backIcon);
         mainMenuButton.addActionListener(this);
         frame.add(mainMenuButton, BorderLayout.NORTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds information about the birthday to the window
     private void displayBirthdayInformation() {
         JLabel nameLabel = new JLabel("Name: " + birthday.getName());
         JLabel birthdateLabel = new JLabel("Birthdate: " + birthday.dateToString());
@@ -93,6 +112,11 @@ public class DisplayBirthdayWindow implements ActionListener {
         new DisplayBirthdayWindow(testBirthday);
     }
 
+    // MODIFIES: this, ViewCalendarWindow
+    // EFFECTS: If the delete button was pressed, delete the birthday if the user confirms the deletion
+    //                or do nothing if the user does not confirm.
+    //          Otherwise, if the main menu button was pressed, display the calendar window and dispose of
+    //                this window.
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == deleteButton) {
