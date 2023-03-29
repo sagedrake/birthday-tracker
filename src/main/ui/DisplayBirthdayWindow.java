@@ -37,6 +37,7 @@ public class DisplayBirthdayWindow implements ActionListener {
         frame.setTitle("View Birthday");
         frame.setSize(ViewCalendarWindow.WINDOW_WIDTH, ViewCalendarWindow.WINDOW_HEIGHT);
         frame.setLocationRelativeTo(null); // center the window on screen
+        frame.getContentPane().setBackground(Color.WHITE);
 
         ImageIcon cakeImage = new ImageIcon("./data/cakeIcon.png");
         frame.setIconImage(cakeImage.getImage());
@@ -97,19 +98,6 @@ public class DisplayBirthdayWindow implements ActionListener {
         infoPanel.add(giftIdeasLabel);
 
         frame.add(infoPanel);
-    }
-
-    public static void main(String[] args) {
-        ArrayList<String> snoopyInterests = new ArrayList<>();
-        snoopyInterests.add("Reading");
-        snoopyInterests.add("Dancing");
-        snoopyInterests.add("Sleeping");
-        ArrayList<String> snoopyGiftIdeas = new ArrayList<>();
-        snoopyGiftIdeas.add("War and Peace");
-        snoopyGiftIdeas.add("Root beer");
-        Birthday testBirthday = new Birthday("Snoopy", 8, 10, 1950, snoopyInterests, snoopyGiftIdeas);
-
-        new DisplayBirthdayWindow(testBirthday);
     }
 
     // MODIFIES: this, ViewCalendarWindow

@@ -179,7 +179,4 @@ public class ViewCalendarWindow implements ListSelectionListener {
         }
     }
 
-//    public static void main(String[] args) {
-//        new ViewCalendarWindow(true);
-//    }
 }

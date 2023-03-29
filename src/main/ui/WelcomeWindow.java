@@ -12,8 +12,8 @@ public class WelcomeWindow implements ActionListener {
     private ImageIcon catImage;
     private JLabel imageLabel;
     private JLabel questionLabel;
-    private JButton yesButton;
-    private JButton noButton;
+    private JButton loadButton;
+    private JButton newButton;
     private JPanel buttonPanel;
 
     // EFFECTS: display new welcome window with choice to load calendar from file
@@ -47,14 +47,14 @@ public class WelcomeWindow implements ActionListener {
     private void addButtons() {
         buttonPanel = new JPanel();
 
-        yesButton = new JButton("Load From File");
-        yesButton.addActionListener(this);
+        loadButton = new JButton("Load From File");
+        loadButton.addActionListener(this);
 
-        noButton = new JButton("New Calendar");
-        noButton.addActionListener(this);
+        newButton = new JButton("New Calendar");
+        newButton.addActionListener(this);
 
-        buttonPanel.add(yesButton);
-        buttonPanel.add(noButton);
+        buttonPanel.add(loadButton);
+        buttonPanel.add(newButton);
 
         frame.add(buttonPanel, BorderLayout.SOUTH);
     }
@@ -64,16 +64,11 @@ public class WelcomeWindow implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         frame.dispose();
-        if (e.getSource() == yesButton) {
+        if (e.getSource() == loadButton) {
             new ViewCalendarWindow(true);
         } else {
             new ViewCalendarWindow(false);
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: runs the birthday calendar program by creating a new welcome window
-    public static void main(String[] args) {
-        new WelcomeWindow();
-    }
 }

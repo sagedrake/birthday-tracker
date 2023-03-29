@@ -3,6 +3,7 @@ package ui;
 import model.Birthday;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -44,6 +45,7 @@ public class AddBirthdayWindow implements ActionListener {
         frame = new JFrame();
         frame.setSize(ViewCalendarWindow.WINDOW_WIDTH, ViewCalendarWindow.WINDOW_HEIGHT);
         frame.setLocationRelativeTo(null); // center the window on screen
+        frame.getContentPane().setBackground(Color.WHITE);
 
         ImageIcon cakeImage = new ImageIcon("./data/cakeIcon.png");
         frame.setIconImage(cakeImage.getImage());
@@ -102,11 +104,11 @@ public class AddBirthdayWindow implements ActionListener {
         nameText.setBounds(100, 20, 165, 25);
         panel.add(nameText);
 
-        birthdateText = new JTextField(25);
+        birthdateText = new JTextField("mm/dd", 25);
         birthdateText.setBounds(100, 50, 165, 25);
         panel.add(birthdateText);
 
-        yearText = new JTextField(25);
+        yearText = new JTextField("yyyy",25);
         yearText.setBounds(100, 80, 165, 25);
         panel.add(yearText);
 
@@ -147,7 +149,7 @@ public class AddBirthdayWindow implements ActionListener {
 
         int year;
         // if no year is entered, represent to year as 0 to indicate an unknown year
-        if (yearText.getText().equals("")) {
+        if (yearText.getText().equals("") || yearText.getText().equals("yyyy")) {
             year = 0;
         } else {
             year = Integer.parseInt(yearText.getText());
@@ -177,8 +179,4 @@ public class AddBirthdayWindow implements ActionListener {
         }
         return strings;
     }
-
-//    public static void main(String[] args) {
-//        new AddBirthdayWindow();
-//    }
 }

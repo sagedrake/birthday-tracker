@@ -1,8 +1,9 @@
 package ui;
 
+// the Main class responsible for starting the application
 public class Main {
-    // EFFECTS: create an instance of BirthdayCalendarApp, which will cause the application to run
+    // EFFECTS: runs the birthday calendar program by creating a new welcome window
     public static void main(String[] args) {
-        BirthdayCalendarConsoleApp calendarApp = new BirthdayCalendarConsoleApp();
+        new WelcomeWindow();;
     }
 }
