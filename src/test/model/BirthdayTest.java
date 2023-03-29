@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.Year;
 import java.util.ArrayList;
 
@@ -195,5 +194,10 @@ class BirthdayTest {
         JSONArray giftIdeas = jsonObject.getJSONArray("gift ideas");
         assertEquals(2, giftIdeas.length());
         assertEquals("War and Peace", giftIdeas.get(0).toString());
+    }
+
+    @Test
+    public void testToString() {
+        assertEquals("08/10 - Snoopy", testBirthday.toString());
     }
 }

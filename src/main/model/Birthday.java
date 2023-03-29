@@ -139,6 +139,7 @@ public class Birthday implements Writeable {
         return json;
     }
 
+    // EFFECTS: Returns a String like "01/01 - Name" that represents the name and date of the birthday
     @Override
     public String toString() {
         return dateToString() + " - " + name;
