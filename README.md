@@ -30,9 +30,9 @@ Phase 2 additions:
 - As a user, I want to be provided with the option to load my calendar from file when I open the application
 
 # Instructions for Grader
-- You can locate my visual component by running WelcomeWindow.main(). There is a birthday cat image and also
+- You can locate my visual component by running Main.main(). There is a birthday cat image and also
   a cake icon in the top left corner.
-- You can reload the state of my application by running WelcomeWindow.main() and clicking "Load from file"
+- You can reload the state of my application by running Main.main() and clicking "Load from file"
 - You can generate the first required action related to adding Xs to a Y by clicking "Add Birthday"
   - Enter a name and birthdate (replace "mm/dd" with a date like 01/01)
   - Optional: enter a year by replacing yyyy with a year
