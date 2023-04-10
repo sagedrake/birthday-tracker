@@ -2,6 +2,8 @@ package ui;
 
 import model.Birthday;
 import model.Calendar;
+import model.Event;
+import model.EventLog;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -285,5 +287,11 @@ public class BirthdayCalendarConsoleApp {
 
         System.out.print("\nPress enter to continue.");
         input.nextLine();
+    }
+
+    public static void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e);
+        }
     }
 }

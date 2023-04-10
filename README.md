@@ -47,6 +47,19 @@ Phase 2 additions:
 - You can save the state of my application by clicking the red X button to exit. You should be asked whether 
  you want to save your calendar to file. Click "Yes" to save.
 
+## Phase 4 - Task 2:
+Sun Apr 09 17:22:08 PDT 2023 <br />
+New calendar created <br />
+Sun Apr 09 17:22:08 PDT 2023 <br />
+Birthday with name "Snoopy" added to calendar. <br />
+Sun Apr 09 17:22:08 PDT 2023 <br />
+Birthday with name "Sage" added to calendar. <br />
+Sun Apr 09 17:22:19 PDT 2023 <br />
+Birthday with name "Sage Drake" added to calendar. <br />
+Sun Apr 09 17:22:27 PDT 2023 <br />
+Birthday with name "Sage" deleted from calendar. <br />
+Sun Apr 09 17:22:38 PDT 2023 <br />
+Birthday with name "Madi" added to calendar. <br />
 
 ## Sources:
 - https://github.students.cs.ubc.ca/CPSC210/TellerApp
@@ -61,3 +74,11 @@ For learning GUIs:
 - https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
 - https://www.youtube.com/watch?v=OI-TFbHQhtA
 - https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html#overview
+
+
+## Refactoring ideas:
+- All the classes I created to represent GUI windows have things in common such 
+their size and position on the screen, their default close operation, their icon, etc.
+I could have made an abstract super class that implements this common behaviour when constructed,
+and then had each window extend that superclass. This would reduce repetition in my code.
+- 

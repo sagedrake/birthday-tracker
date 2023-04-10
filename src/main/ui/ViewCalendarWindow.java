@@ -100,8 +100,10 @@ public class ViewCalendarWindow implements ListSelectionListener {
                         JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION) {
                     saveCalendarToFile();
+                    BirthdayCalendarConsoleApp.printLog();
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 } else if (result == JOptionPane.NO_OPTION) {
+                    BirthdayCalendarConsoleApp.printLog();
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 }
             }

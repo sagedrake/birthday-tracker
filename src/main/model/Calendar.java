@@ -14,6 +14,7 @@ public class Calendar implements Writeable {
     // EFFECTS: create a new calendar with an empty birthday list
     public Calendar() {
         birthdays = new ArrayList<>();
+        EventLog.getInstance().logEvent(new Event("New calendar created"));
     }
 
     public List<Birthday> getBirthdays() {
@@ -33,6 +34,7 @@ public class Calendar implements Writeable {
             }
             i++;
         }
+        EventLog.getInstance().logEvent(new Event("Birthday with name \"" + name + "\" deleted from calendar."));
     }
 
     // REQUIRES: there is no birthday with the same name already in the calendar
@@ -40,6 +42,8 @@ public class Calendar implements Writeable {
     // EFFECTS: add this birthday to the calendar
     public void addBirthday(Birthday b) {
         birthdays.add(b);
+        EventLog.getInstance().logEvent(new Event("Birthday with name \"" + b.getName()
+                + "\" added to calendar."));
     }
 
     // EFFECTS: produce String which is a list of all the birthdays in the calendar

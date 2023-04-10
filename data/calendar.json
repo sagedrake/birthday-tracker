@@ -1,25 +1,25 @@
 {"birthdays": [
-    {
-        "month": 1,
-        "year": 1950,
-        "gift ideas": [
-            "War and Peace",
-            "Root beer"
-        ],
-        "name": "Snoopy",
-        "interests": [
-            "Reading",
-            "Dancing",
-            "Sleeping"
-        ],
-        "day": 10
-    },
-    {
-        "month": 11,
-        "year": 2003,
-        "gift ideas": [],
-        "name": "Sage",
-        "interests": [],
-        "day": 26
-    }
+  {
+    "month": 1,
+    "year": 1950,
+    "gift ideas": [
+      "War and Peace",
+      "Root beer"
+    ],
+    "name": "Snoopy",
+    "interests": [
+      "Reading",
+      "Dancing",
+      "Sleeping"
+    ],
+    "day": 10
+  },
+  {
+    "month": 11,
+    "year": 0,
+    "gift ideas": [],
+    "name": "Sage",
+    "interests": [],
+    "day": 26
+  }
 ]}
