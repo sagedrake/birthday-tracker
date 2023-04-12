@@ -64,10 +64,10 @@ public class AddBirthdayWindow implements ActionListener {
                         JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION) {
                     ViewCalendarWindow.saveCalendarToFile();
-                    BirthdayCalendarConsoleApp.printLog();
+                    ViewCalendarWindow.printLog();
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 } else if (result == JOptionPane.NO_OPTION) {
-                    BirthdayCalendarConsoleApp.printLog();
+                    ViewCalendarWindow.printLog();
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 }
             }

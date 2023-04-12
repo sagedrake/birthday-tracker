@@ -77,8 +77,23 @@ For learning GUIs:
 
 
 ## Refactoring ideas:
-- All the classes I created to represent GUI windows have things in common such 
+The first refactoring I would so is to extract common behaviour from all the classes I used to represent
+different GUI windows. These classes all have things in common such  as
 their size and position on the screen, their default close operation, their icon, etc.
-I could have made an abstract super class that implements this common behaviour when constructed,
+I would make an abstract super class that implements this common behaviour when constructed,
 and then had each window extend that superclass. This would reduce repetition in my code.
-- 
+
+The second refactoring I would do is to use the observer pattern with my GUI windows. When a birthday
+is added in AddBirthdayWindow, or deleted in DisplayBirthdayWindow, the main ViewCalendarWindow needs
+to become visible and also reflect these changes. I dealt with this by making many of ViewCalendarWindow's
+methods and fields static, similar to the Singleton pattern. I could use the observer pattern instead by
+making a subject interface and an observer interface (they would have to be interfaces and not classes
+since the ui window classes will already each be extending a class after the first refactoring). The
+ViewCalendarWindow would implement the Observer interface and the AddBirthdayWindow and DisplayBirthdayWindow
+classes would implement the Subject interface. When a method in ViewCalendarWindow creates a new AddBirthdayWindow 
+or DisplayBirthdayWindow, it would also call an add observer method with itself as a parameter. Then
+when a birthday is added in AddBirthdayWindow, or deleted in DisplayBirthdayWindow, the update method can 
+be called on observers so that ViewCalendarWindow will update. This would eliminate the need to use static
+methods and fields. It would also mean that AddBirthdayWindow and DisplayBirthdayWindow would need less information
+about ViewCalendarWindow since they would not need to know exactly *how* to update ViewCalendarWindow when
+a change is made.

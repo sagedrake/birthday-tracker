@@ -2,6 +2,8 @@ package ui;
 
 import model.Birthday;
 import model.Calendar;
+import model.Event;
+import model.EventLog;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -100,10 +102,10 @@ public class ViewCalendarWindow implements ListSelectionListener {
                         JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION) {
                     saveCalendarToFile();
-                    BirthdayCalendarConsoleApp.printLog();
+                    printLog();
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 } else if (result == JOptionPane.NO_OPTION) {
-                    BirthdayCalendarConsoleApp.printLog();
+                    printLog();
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 }
             }
@@ -181,4 +183,10 @@ public class ViewCalendarWindow implements ListSelectionListener {
         }
     }
 
+    // EFFECTS: print all logged events to the console
+    public static void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e);
+        }
+    }
 }
