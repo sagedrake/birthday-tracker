@@ -29,37 +29,6 @@ Phase 2 additions:
   changes to my calendar
 - As a user, I want to be provided with the option to load my calendar from file when I open the application
 
-# Instructions for Grader
-- You can locate my visual component by running Main.main(). There is a birthday cat image and also
-  a cake icon in the top left corner.
-- You can reload the state of my application by running Main.main() and clicking "Load from file"
-- You can generate the first required action related to adding Xs to a Y by clicking "Add Birthday"
-  - Enter a name and birthdate (replace "mm/dd" with a date like 01/01)
-  - Optional: enter a year by replacing yyyy with a year
-  - Optional: enter a list of interests separated by commas
-  - Optional: enter a list of gift ideas separated by commas
-  - Then click "Add birthday". You should be taken back to the main window with the list of birthdays and be able 
-  to see the birthday you added.
-- You can generate the second required action related to adding Xs to a Y (which is to delete a birthday) by...
-  - Click once on any birthday in the list shown. A window should open with information about this birthday.
-  - Click "Delete birthday" and then click "Yes" to confirm the deletion
-  - YOu should be taken back to the main window with the list of birthdays
-- You can save the state of my application by clicking the red X button to exit. You should be asked whether 
- you want to save your calendar to file. Click "Yes" to save.
-
-## Phase 4 - Task 2:
-Sun Apr 09 17:22:08 PDT 2023 <br />
-New calendar created <br />
-Sun Apr 09 17:22:08 PDT 2023 <br />
-Birthday with name "Snoopy" added to calendar. <br />
-Sun Apr 09 17:22:08 PDT 2023 <br />
-Birthday with name "Sage" added to calendar. <br />
-Sun Apr 09 17:22:19 PDT 2023 <br />
-Birthday with name "Sage Drake" added to calendar. <br />
-Sun Apr 09 17:22:27 PDT 2023 <br />
-Birthday with name "Sage" deleted from calendar. <br />
-Sun Apr 09 17:22:38 PDT 2023 <br />
-Birthday with name "Madi" added to calendar. <br />
 
 ## Sources:
 - https://github.students.cs.ubc.ca/CPSC210/TellerApp
